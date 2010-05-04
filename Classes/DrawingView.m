@@ -11,6 +11,9 @@
 
 @implementation DrawingView
 
+#pragma mark properties
+@synthesize borderWidth;
+
 
 - (id)initWithFrame:(CGRect)frame {
     if ((self = [super initWithFrame:frame])) {
@@ -19,15 +22,9 @@
     return self;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
 
 - (void)dealloc {
+    [borderWidth release], borderWidth = nil;
     [super dealloc];
 }
 
@@ -35,12 +32,11 @@
     float fw, fh;
     fw = 100.0;
     fh = 50.0;
-    
+
     // get graphics context from Cocoa for use by Quartz CoreGraphics.    
     CGContextRef graphicsContext = UIGraphicsGetCurrentContext();
 
-
-    CGContextSetLineWidth(graphicsContext, 1);
+    CGContextSetLineWidth(graphicsContext, [[self borderWidth] floatValue]);
     CGContextBeginPath(graphicsContext);
     CGContextMoveToPoint(graphicsContext, 0.0, 0.0);
     CGContextAddArcToPoint(graphicsContext, fw, fh, fw/2, fh, 10.0);

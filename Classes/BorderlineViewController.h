@@ -14,7 +14,7 @@
     DrawingView *drawingView;
 }
 #pragma mark properties
-@property(nonatomic,retain)DrawingView *drawingView;
+@property(nonatomic,retain)IBOutlet DrawingView *drawingView;
 
 
 -(IBAction)handleCornerRadiusSlider:(UISlider*)sender; 
