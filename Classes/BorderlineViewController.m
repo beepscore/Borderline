@@ -7,8 +7,12 @@
 //
 
 #import "BorderlineViewController.h"
+#import "DrawingView.h"
 
 @implementation BorderlineViewController
+
+#pragma mark properties
+@synthesize drawingView;
 
 
 
@@ -55,10 +59,12 @@
 - (void)viewDidUnload {
 	// Release any retained subviews of the main view.
 	// e.g. self.myOutlet = nil;
+    self.drawingView = nil;
 }
 
 
 - (void)dealloc {
+    [drawingView release], drawingView = nil;
     [super dealloc];
 }
 

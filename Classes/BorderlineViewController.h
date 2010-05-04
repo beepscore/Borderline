@@ -7,10 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+@class DrawingView;
 
 @interface BorderlineViewController : UIViewController {
-//    UIImage *myImage;
+#pragma mark instance variables
+    DrawingView *drawingView;
 }
+#pragma mark properties
+@property(nonatomic,retain)DrawingView *drawingView;
+
 
 -(IBAction)handleCornerRadiusSlider:(UISlider*)sender; 
 
