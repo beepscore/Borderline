@@ -9,8 +9,12 @@
 #import <UIKit/UIKit.h>
 
 @interface BorderlineViewController : UIViewController {
-
+//    UIImage *myImage;
 }
+
+-(IBAction)handleCornerRadiusSlider:(UISlider*)sender; 
+
+-(IBAction)handleBorderWidthSlider:(UISlider*)sender; 
 
 @end
 

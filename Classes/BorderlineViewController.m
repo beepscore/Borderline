@@ -62,4 +62,13 @@
     [super dealloc];
 }
 
+-(IBAction)handleCornerRadiusSlider:(UISlider*)sender {
+    // [self cornerRadius] = [sender value];
+}
+
+
+-(IBAction)handleBorderWidthSlider:(UISlider*)sender {
+    // [self borderWidth] = [sender value];    
+}
+
 @end
