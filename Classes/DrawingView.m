@@ -31,5 +31,23 @@
     [super dealloc];
 }
 
+- (void)drawRect:(CGRect)rect {
+    float fw, fh;
+    fw = 100.0;
+    fh = 50.0;
+    
+    // get graphics context from Cocoa for use by Quartz CoreGraphics.    
+    CGContextRef graphicsContext = UIGraphicsGetCurrentContext();
+
+
+    CGContextSetLineWidth(graphicsContext, 1);
+    CGContextBeginPath(graphicsContext);
+    CGContextMoveToPoint(graphicsContext, 0.0, 0.0);
+    CGContextAddArcToPoint(graphicsContext, fw, fh, fw/2, fh, 10.0);
+    CGContextDrawPath(graphicsContext, kCGPathStroke);
+    
+    
+}
+
 
 @end

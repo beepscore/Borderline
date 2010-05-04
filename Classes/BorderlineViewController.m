@@ -70,11 +70,13 @@
 
 -(IBAction)handleCornerRadiusSlider:(UISlider*)sender {
     // [self cornerRadius] = [sender value];
+    [self.drawingView setNeedsDisplay];
 }
 
 
 -(IBAction)handleBorderWidthSlider:(UISlider*)sender {
-    // [self borderWidth] = [sender value];    
+    // [self borderWidth] = [sender value];
+    [self.drawingView setNeedsDisplay];
 }
 
 @end
