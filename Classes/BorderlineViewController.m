@@ -15,7 +15,6 @@
 @synthesize drawingView;
 
 
-
 /*
 // Implement loadView to create a view hierarchy programmatically, without using a nib.
 - (void)loadView {
@@ -23,12 +22,15 @@
 */
 
 
-/*
+
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.drawingView.borderWidth = 10.0;
+    self.drawingView.cornerRadius = 10.0;
+    [self.drawingView setNeedsDisplay];
 }
-*/
+
 
 
 /*
@@ -59,19 +61,16 @@
 }
 
 -(IBAction)handleCornerRadiusSlider:(UISlider*)sender {
-    // [self cornerRadius] = [sender value];
+
+    self.drawingView.cornerRadius = [sender value];
     [self.drawingView setNeedsDisplay];
 }
 
 
 -(IBAction)handleBorderWidthSlider:(UISlider*)sender {    
-    NSNumber *sliderValue = [[NSNumber alloc] initWithFloat:[sender value]];
-    NSLog(@"sliderValue = %@", sliderValue);
 
-    self.drawingView.borderWidth = sliderValue;
-    [sliderValue release];
-    
-    NSLog(@"self.drawingView.borderWidth = %@", self.drawingView.borderWidth);
+    // need outlet to drawingView to access its properties (e.g. borderWidth)
+    self.drawingView.borderWidth = [sender value];
     [self.drawingView setNeedsDisplay];
 }
 

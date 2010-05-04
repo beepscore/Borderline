@@ -11,10 +11,11 @@
 
 @interface DrawingView : UIView {
 #pragma mark instance variables
-    NSNumber *borderWidth;
-
+    CGFloat borderWidth;
+    CGFloat cornerRadius;
 }
 #pragma mark properties
-@property(nonatomic,retain)NSNumber *borderWidth;
+@property(nonatomic,assign)CGFloat borderWidth;
+@property(nonatomic,assign)CGFloat cornerRadius;
 
 @end

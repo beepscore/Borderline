@@ -13,7 +13,7 @@
 
 #pragma mark properties
 @synthesize borderWidth;
-
+@synthesize cornerRadius;
 
 - (id)initWithFrame:(CGRect)frame {
     if ((self = [super initWithFrame:frame])) {
@@ -24,24 +24,30 @@
 
 
 - (void)dealloc {
-    [borderWidth release], borderWidth = nil;
+    
     [super dealloc];
 }
 
 - (void)drawRect:(CGRect)rect {
-    float fw, fh;
-    fw = 100.0;
-    fh = 50.0;
+
+    CGPoint arcPoint1, arcPoint2;
+    CGFloat arcRadius;
 
     // get graphics context from Cocoa for use by Quartz CoreGraphics.    
     CGContextRef graphicsContext = UIGraphicsGetCurrentContext();
 
-    CGContextSetLineWidth(graphicsContext, [[self borderWidth] floatValue]);
+    CGContextSetLineWidth(graphicsContext, [self borderWidth]);
     CGContextBeginPath(graphicsContext);
     CGContextMoveToPoint(graphicsContext, 0.0, 0.0);
-    CGContextAddArcToPoint(graphicsContext, fw, fh, fw/2, fh, 10.0);
-    CGContextDrawPath(graphicsContext, kCGPathStroke);
     
+    arcPoint1 = CGPointMake(100.0, 50.0);
+    arcPoint2 = CGPointMake(arcPoint1.x - 20.0, arcPoint1.y + [self cornerRadius]);
+    arcRadius = [self cornerRadius];    
+    
+    CGContextAddArcToPoint(graphicsContext, arcPoint1.x, arcPoint1.y, 
+                           arcPoint2.x, arcPoint2.y, arcRadius);
+    
+    CGContextDrawPath(graphicsContext, kCGPathStroke);    
     
 }
 
