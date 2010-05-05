@@ -29,56 +29,91 @@
     [super dealloc];
 }
 
-// Ref Gelphman Ch 6 pg 114-115
-void addRoundedRectToPath(CGContextRef context, CGRect rect, CGFloat ovalWidth, CGFloat ovalHeight) {
-    
+// Ref Gelphman Ch 6 pg 114-115, 132-133
+CGMutablePathRef roundedRectPathRef(CGRect rect, CGFloat ovalWidth, CGFloat ovalHeight) {
+
+    CGMutablePathRef tempPath = CGPathCreateMutable(); 
+
     CGFloat fw, fh;
-    // if either ovalWidth or ovalHeight is 0, add a regular rectangle
+    // if either ovalWidth or ovalHeight is 0, don't round corners
     if ((0 == ovalWidth) || (0 == ovalHeight)) {
-        CGContextAddRect(context, rect);
+        CGPathAddRect(tempPath, NULL, rect);
     } else {
-        CGContextSaveGState(context);
-        // Translate to lower-left corner of rectangle
-        CGContextTranslateCTM(context, CGRectGetMinX(rect), CGRectGetMinY(rect));
-        // Scale by the oval width and height so that
-        // each rounded corner is 0.5 units in radius
-        CGContextScaleCTM(context, ovalWidth, ovalHeight);
-        // Unscale the rectangle width by the amount of the x scaling
-        fw = CGRectGetWidth(rect) / ovalWidth;
-        // Unscale the rectangle height by the amount of the y scaling
-        fh = CGRectGetHeight(rect) / ovalHeight;
-        // Start at the right edge of the rectangle, at the midpoint in y
-        CGContextMoveToPoint(context, fw, fh/2);
-        // Segment 1
-        CGContextAddArcToPoint(context, fw, fh, fw/2, fh, 0.5);
-        // Segment 2
-        CGContextAddArcToPoint(context, 0, fh, 0, fh/2, 0.5);
-        // Segment 3
-        CGContextAddArcToPoint(context, 0, 0, fw/2, 0, 0.5);
-        // Segment 4
-        CGContextAddArcToPoint(context, fw, 0, fw, fh/2, 0.5);
-        // Closing the path adds the last segment
-        CGContextClosePath(context);
         
-        CGContextRestoreGState(context);
+        // Non-uniform scale coordinate system by the oval width and height.
+        // In scaled coordinates, each rounded corner is a circular arc of radius = 0.5
+        CGAffineTransform transformScale = CGAffineTransformScale(CGAffineTransformIdentity, ovalWidth, ovalHeight);
+
+        // Rectangle width in scaled x coordinate
+        fw = CGRectGetWidth(rect) / ovalWidth;
+        // Rectangle height in scaled y coordinate
+        fh = CGRectGetHeight(rect) / ovalHeight;        
+                
+        CGFloat scaledRadius = 0.5;
+        
+        // Start at minimum x,y corner (on iPhone, left top)
+        CGPoint arc1Center = CGPointMake(scaledRadius, scaledRadius);        
+        // on iPhone, right top
+        CGPoint arc2Start  = CGPointMake((fw - scaledRadius), 0);
+        CGPoint arc2Center = CGPointMake((fw - scaledRadius), scaledRadius);
+        // on iPhone, right bottom
+        CGPoint arc3Start  = CGPointMake(fw, (fh - scaledRadius));
+        CGPoint arc3Center = CGPointMake((fw - scaledRadius), (fh - scaledRadius));
+        // on iPhone, left bottom        
+        CGPoint arc4Start  = CGPointMake(scaledRadius, fh);
+        CGPoint arc4Center = CGPointMake(scaledRadius, (fh - scaledRadius));
+        
+        // CGPathMoveToPoint applies transform before move        
+        //CGPathMoveToPoint(tempPath, transformScale, arc1Start.x, arc1Start.y);        
+        CGPathAddArc(tempPath, &transformScale, arc1Center.x, arc1Center.y, scaledRadius, -M_PI, -M_PI/2, NO);
+        
+        CGPathAddLineToPoint(tempPath, &transformScale, arc2Start.x, arc2Start.y);        
+        CGPathAddArc(tempPath, &transformScale, arc2Center.x, arc2Center.y, scaledRadius, -M_PI/2, 0, NO);
+
+        CGPathAddLineToPoint(tempPath, &transformScale, arc3Start.x, arc3Start.y);        
+        CGPathAddArc(tempPath, &transformScale, arc3Center.x, arc3Center.y, scaledRadius, 0, M_PI/2, NO);
+
+        CGPathAddLineToPoint(tempPath, &transformScale, arc4Start.x, arc4Start.y);        
+        CGPathAddArc(tempPath, &transformScale, arc4Center.x, arc4Center.y, scaledRadius, M_PI/2, M_PI, NO);
+
+        // Closing the path adds the last segment from arc4 end to arc1 start.
+        CGPathCloseSubpath(tempPath);
+
     }
+    return tempPath;
+}
+
+
+void drawBorder(CGContextRef graphicsContext, CGPathRef myPath, CGFloat aBorderWidth) {
+
+    CGContextSaveGState(graphicsContext);
+
+    CGContextBeginPath(graphicsContext);
+    CGContextAddPath(graphicsContext, myPath);
+    
+    CGContextSetLineWidth(graphicsContext, aBorderWidth);
+    CGContextSetRGBStrokeColor(graphicsContext, 1.0, 1.0, 1.0, 1.0);
+    
+    CGContextDrawPath(graphicsContext, kCGPathStroke);
+    
+    CGContextRestoreGState(graphicsContext);
 }
 
 
 - (void)drawRect:(CGRect)rect {
 
-    CGPoint arcPoint1, arcPoint2;
-    CGFloat arcRadius;
-
     // get graphics context from Cocoa for use by Quartz CoreGraphics.    
     CGContextRef graphicsContext = UIGraphicsGetCurrentContext();
     
-    CGContextSaveGState(graphicsContext);
-
-    CGRect clipRect = CGRectMake(30.0, 30.0, 220.0, 220.0);
+    CGRect clipRect = CGRectMake(20.0, 20.0, 280.0, 280.0);
     CGFloat ovalWidth = [self cornerRadius];
     CGFloat ovalHeight = ovalWidth;
-    addRoundedRectToPath(graphicsContext, clipRect, ovalWidth, ovalHeight);
+
+    CGMutablePathRef myPath = roundedRectPathRef(clipRect, ovalWidth, ovalHeight);
+
+    CGContextSaveGState(graphicsContext);
+    
+    CGContextAddPath(graphicsContext, myPath);
     CGContextClip(graphicsContext);
     
     
@@ -88,25 +123,12 @@ void addRoundedRectToPath(CGContextRef context, CGRect rect, CGFloat ovalWidth, 
     // http://developer.apple.com/iphone/library/documentation/Cocoa/Conceptual/LoadingResources/ImageSoundResources/ImageSoundResources.html
     // Gelphman Ch 8 p 187, Ch 9 p 206    
     CGContextDrawImage(graphicsContext, [self bounds], [self.myImage CGImage]);
-     
-    CGContextRestoreGState(graphicsContext);
 
+    // turn off clipping
+    CGContextRestoreGState(graphicsContext);
     
-    CGContextSetLineWidth(graphicsContext, [self borderWidth]);
-    CGContextBeginPath(graphicsContext);
-    
-    
-    CGContextMoveToPoint(graphicsContext, 0.0, 0.0);
-    
-    arcPoint1 = CGPointMake(100.0, 50.0);
-    arcPoint2 = CGPointMake(arcPoint1.x - 20.0, arcPoint1.y + [self cornerRadius]);
-    arcRadius = [self cornerRadius];    
-    
-    CGContextAddArcToPoint(graphicsContext, arcPoint1.x, arcPoint1.y, 
-                           arcPoint2.x, arcPoint2.y, arcRadius);
-    
-    CGContextDrawPath(graphicsContext, kCGPathStroke);
-    
+    drawBorder(graphicsContext, myPath, self.borderWidth);
+
 }
 
 @end
