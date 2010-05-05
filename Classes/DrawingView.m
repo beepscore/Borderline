@@ -84,6 +84,24 @@ CGMutablePathRef roundedRectPathRef(CGRect rect, CGFloat ovalWidth, CGFloat oval
 }
 
 
+void drawClippedImage(CGContextRef graphicsContext, CGRect rect, CGImageRef image, CGPathRef myPath) {
+    
+    CGContextSaveGState(graphicsContext);
+    
+    CGContextAddPath(graphicsContext, myPath);
+    CGContextClip(graphicsContext);
+   
+    // Here we get a CGImageRef from a Cocoa UIImage.
+    // Alternatively, we could have gotten a CGImageRef from C.
+    // http://developer.apple.com/iphone/library/documentation/Cocoa/Conceptual/LoadingResources/ImageSoundResources/ImageSoundResources.html
+    // Ref Gelphman Ch 8 p 187, Ch 9 p 206-207   
+    CGContextDrawImage(graphicsContext, rect, image);
+    
+    // turn off clipping
+    CGContextRestoreGState(graphicsContext);
+}
+
+
 void drawBorder(CGContextRef graphicsContext, CGPathRef myPath, CGFloat aBorderWidth) {
 
     CGContextSaveGState(graphicsContext);
@@ -104,28 +122,13 @@ void drawBorder(CGContextRef graphicsContext, CGPathRef myPath, CGFloat aBorderW
 
     // get graphics context from Cocoa for use by Quartz CoreGraphics.    
     CGContextRef graphicsContext = UIGraphicsGetCurrentContext();
-    
+
     CGRect clipRect = CGRectMake(20.0, 20.0, 280.0, 280.0);
     CGFloat ovalWidth = [self cornerRadius];
-    CGFloat ovalHeight = ovalWidth;
-
+    CGFloat ovalHeight = ovalWidth;    
     CGMutablePathRef myPath = roundedRectPathRef(clipRect, ovalWidth, ovalHeight);
-
-    CGContextSaveGState(graphicsContext);
     
-    CGContextAddPath(graphicsContext, myPath);
-    CGContextClip(graphicsContext);
-    
-    
-    // CGContextDrawImage ref Gelphman Ch 9 p 207
-    // Here we get a CGImageRef from a Cocoa UIImage
-    // Alternatively, we could have gotten a CGImageRef from C
-    // http://developer.apple.com/iphone/library/documentation/Cocoa/Conceptual/LoadingResources/ImageSoundResources/ImageSoundResources.html
-    // Gelphman Ch 8 p 187, Ch 9 p 206    
-    CGContextDrawImage(graphicsContext, [self bounds], [self.myImage CGImage]);
-
-    // turn off clipping
-    CGContextRestoreGState(graphicsContext);
+    drawClippedImage(graphicsContext, [self bounds], [self.myImage CGImage], myPath);
     
     drawBorder(graphicsContext, myPath, self.borderWidth);
 
