@@ -63,8 +63,6 @@ CGMutablePathRef roundedRectPathRef(CGRect rect, CGFloat ovalWidth, CGFloat oval
         CGPoint arc4Start  = CGPointMake(scaledRadius, fh);
         CGPoint arc4Center = CGPointMake(scaledRadius, (fh - scaledRadius));
         
-        // CGPathMoveToPoint applies transform before move        
-        //CGPathMoveToPoint(tempPath, transformScale, arc1Start.x, arc1Start.y);        
         CGPathAddArc(tempPath, &transformScale, arc1Center.x, arc1Center.y, scaledRadius, -M_PI, -M_PI/2, NO);
         
         CGPathAddLineToPoint(tempPath, &transformScale, arc2Start.x, arc2Start.y);        
@@ -81,6 +79,24 @@ CGMutablePathRef roundedRectPathRef(CGRect rect, CGFloat ovalWidth, CGFloat oval
 
     }
     return tempPath;
+}
+
+void drawDropShadow(CGContextRef graphicsContext, CGRect rect, CGPathRef myPath) {
+    
+    CGContextSaveGState(graphicsContext);
+
+    CGContextTranslateCTM(graphicsContext, rect.size.width/2, rect.size.height/2);
+    CGContextScaleCTM(graphicsContext, 0.95, 0.95);
+    CGContextTranslateCTM(graphicsContext, -rect.size.width/2, -rect.size.height/2);
+    CGContextTranslateCTM(graphicsContext, 0.01 * rect.size.width, 0.02 * rect.size.height);
+
+    CGContextAddPath(graphicsContext, myPath);
+
+    CGContextSetRGBFillColor(graphicsContext, 0.0, 0.0, 0.0, 0.4);
+    
+    CGContextFillPath(graphicsContext);
+    
+    CGContextRestoreGState(graphicsContext);
 }
 
 
@@ -103,9 +119,9 @@ void drawClippedImage(CGContextRef graphicsContext, CGRect rect, CGImageRef imag
 
 
 void drawBorder(CGContextRef graphicsContext, CGPathRef myPath, CGFloat aBorderWidth) {
-
+    
     CGContextSaveGState(graphicsContext);
-
+    
     CGContextBeginPath(graphicsContext);
     CGContextAddPath(graphicsContext, myPath);
     
@@ -123,12 +139,15 @@ void drawBorder(CGContextRef graphicsContext, CGPathRef myPath, CGFloat aBorderW
     // get graphics context from Cocoa for use by Quartz CoreGraphics.    
     CGContextRef graphicsContext = UIGraphicsGetCurrentContext();
 
-    CGRect clipRect = CGRectMake(20.0, 20.0, 280.0, 280.0);
+//    CGRect clipRect = CGRectMake(20.0, 20.0, 280.0, 280.0);
+    CGRect clipRect = CGRectMake(40.0, 40.0, 260.0, 260.0);
     CGFloat ovalWidth = [self cornerRadius];
     CGFloat ovalHeight = ovalWidth;    
     CGMutablePathRef myPath = roundedRectPathRef(clipRect, ovalWidth, ovalHeight);
+
+    drawDropShadow(graphicsContext, [self bounds], myPath);
     
-    drawClippedImage(graphicsContext, [self bounds], [self.myImage CGImage], myPath);
+    //drawClippedImage(graphicsContext, [self bounds], [self.myImage CGImage], myPath);
     
     drawBorder(graphicsContext, myPath, self.borderWidth);
 
