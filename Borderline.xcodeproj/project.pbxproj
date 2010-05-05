@@ -16,6 +16,7 @@
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
 		28D7ACF80DDB3853001CB0EB /* BorderlineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D7ACF70DDB3853001CB0EB /* BorderlineViewController.m */; };
 		DEF4901B11909C7E00329E85 /* DrawingView.m in Sources */ = {isa = PBXBuildFile; fileRef = DEF4901A11909C7E00329E85 /* DrawingView.m */; };
+		DEF81F741190CB0300D69D98 /* sun.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DEF81F731190CB0300D69D98 /* sun.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		8D1107310486CEB800E47090 /* Borderline-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Borderline-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		DEF4901911909C7E00329E85 /* DrawingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawingView.h; sourceTree = "<group>"; };
 		DEF4901A11909C7E00329E85 /* DrawingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawingView.m; sourceTree = "<group>"; };
+		DEF81F731190CB0300D69D98 /* sun.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sun.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 				2899E5210DE3E06400AC0155 /* BorderlineViewController.xib */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
 				8D1107310486CEB800E47090 /* Borderline-Info.plist */,
+				DEF81F731190CB0300D69D98 /* sun.jpg */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -156,6 +159,7 @@
 			files = (
 				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
 				2899E5220DE3E06400AC0155 /* BorderlineViewController.xib in Resources */,
+				DEF81F741190CB0300D69D98 /* sun.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

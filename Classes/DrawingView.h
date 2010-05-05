@@ -13,9 +13,12 @@
 #pragma mark instance variables
     CGFloat borderWidth;
     CGFloat cornerRadius;
+    UIImage *myImage;
 }
+
 #pragma mark properties
 @property(nonatomic,assign)CGFloat borderWidth;
 @property(nonatomic,assign)CGFloat cornerRadius;
+@property(nonatomic,retain)UIImage *myImage;
 
 @end

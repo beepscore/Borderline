@@ -26,11 +26,15 @@
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    NSString* myPath = [[NSBundle mainBundle] pathForResource:@"sun" ofType:@"jpg"];
+    self.drawingView.myImage = [UIImage imageWithContentsOfFile:myPath];
+
     self.drawingView.borderWidth = 10.0;
     self.drawingView.cornerRadius = 10.0;
+        
     [self.drawingView setNeedsDisplay];
 }
-
 
 
 /*
@@ -59,6 +63,7 @@
     [drawingView release], drawingView = nil;
     [super dealloc];
 }
+
 
 -(IBAction)handleCornerRadiusSlider:(UISlider*)sender {
 

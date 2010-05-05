@@ -14,19 +14,21 @@
 #pragma mark properties
 @synthesize borderWidth;
 @synthesize cornerRadius;
+@synthesize myImage;
 
 - (id)initWithFrame:(CGRect)frame {
     if ((self = [super initWithFrame:frame])) {
-        // Initialization code
+        // Initialization code 
     }
     return self;
 }
 
 
 - (void)dealloc {
-    
+    [myImage release], myImage = nil;
     [super dealloc];
 }
+
 
 - (void)drawRect:(CGRect)rect {
 
@@ -36,6 +38,13 @@
     // get graphics context from Cocoa for use by Quartz CoreGraphics.    
     CGContextRef graphicsContext = UIGraphicsGetCurrentContext();
 
+    // CGContextDrawImage ref Gelphman Ch 9 p 207
+    // Here we get a CGImageRef from a Cocoa UIImage
+    // Alternatively, we could have gotten a CGImageRef from C
+    // http://developer.apple.com/iphone/library/documentation/Cocoa/Conceptual/LoadingResources/ImageSoundResources/ImageSoundResources.html
+    // Gelphman Ch 8 p 187, Ch 9 p 206    
+    CGContextDrawImage(graphicsContext, [self bounds], [self.myImage CGImage]);
+    
     CGContextSetLineWidth(graphicsContext, [self borderWidth]);
     CGContextBeginPath(graphicsContext);
     CGContextMoveToPoint(graphicsContext, 0.0, 0.0);
@@ -47,9 +56,8 @@
     CGContextAddArcToPoint(graphicsContext, arcPoint1.x, arcPoint1.y, 
                            arcPoint2.x, arcPoint2.y, arcRadius);
     
-    CGContextDrawPath(graphicsContext, kCGPathStroke);    
+    CGContextDrawPath(graphicsContext, kCGPathStroke);
     
 }
-
 
 @end
