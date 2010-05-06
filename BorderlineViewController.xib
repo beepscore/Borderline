@@ -58,7 +58,7 @@
 					<object class="IBUISlider" id="455035472">
 						<reference key="NSNextResponder" ref="774585933"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{18, 372}, {284, 23}}</string>
+						<string key="NSFrame">{{18, 359}, {284, 23}}</string>
 						<reference key="NSSuperview" ref="774585933"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -83,7 +83,7 @@
 					<object class="IBUILabel" id="405040830">
 						<reference key="NSNextResponder" ref="774585933"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{20, 344}, {280, 29}}</string>
+						<string key="NSFrame">{{20, 322}, {280, 29}}</string>
 						<reference key="NSSuperview" ref="774585933"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>
@@ -111,7 +111,7 @@
 					<object class="IBUILabel" id="127585624">
 						<reference key="NSNextResponder" ref="774585933"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{20, 395}, {280, 29}}</string>
+						<string key="NSFrame">{{20, 389}, {280, 29}}</string>
 						<reference key="NSSuperview" ref="774585933"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -211,12 +211,12 @@
 						<reference key="object" ref="774585933"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="496515029"/>
 							<reference ref="725362690"/>
-							<reference ref="455035472"/>
 							<reference ref="756959344"/>
-							<reference ref="405040830"/>
+							<reference ref="496515029"/>
 							<reference ref="127585624"/>
+							<reference ref="455035472"/>
+							<reference ref="405040830"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
