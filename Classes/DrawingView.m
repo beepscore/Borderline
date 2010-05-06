@@ -160,7 +160,8 @@ void drawBorder(CGContextRef graphicsContext, CGPathRef myPath, CGFloat aBorderW
     drawClippedImage(graphicsContext, [self bounds], [self.myImage CGImage], myPath);
     
     drawBorder(graphicsContext, myPath, self.borderWidth);
-
+    
+    CGPathRelease(myPath);
 }
 
 @end
