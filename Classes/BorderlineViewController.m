@@ -31,7 +31,7 @@
     self.drawingView.myImage = [UIImage imageWithContentsOfFile:myPath];
 
     self.drawingView.borderWidth = 10.0;
-    self.drawingView.cornerRadius = 10.0;
+    self.drawingView.cornerRadius = 50.0;
         
     [self.drawingView setNeedsDisplay];
 }
