@@ -15,6 +15,7 @@
 		2899E5220DE3E06400AC0155 /* BorderlineViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2899E5210DE3E06400AC0155 /* BorderlineViewController.xib */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
 		28D7ACF80DDB3853001CB0EB /* BorderlineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D7ACF70DDB3853001CB0EB /* BorderlineViewController.m */; };
+		DE0C34B8119336EE001A50BC /* cork320x480_8.png in Resources */ = {isa = PBXBuildFile; fileRef = DE0C34B7119336EE001A50BC /* cork320x480_8.png */; };
 		DEF30C9511927EC400F15595 /* beepscoreIcon57.png in Resources */ = {isa = PBXBuildFile; fileRef = DEF30C9411927EC400F15595 /* beepscoreIcon57.png */; };
 		DEF4901B11909C7E00329E85 /* DrawingView.m in Sources */ = {isa = PBXBuildFile; fileRef = DEF4901A11909C7E00329E85 /* DrawingView.m */; };
 		DEF81F741190CB0300D69D98 /* sun.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DEF81F731190CB0300D69D98 /* sun.jpg */; };
@@ -34,6 +35,7 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* Borderline_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Borderline_Prefix.pch; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Borderline-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Borderline-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		DE0C34B7119336EE001A50BC /* cork320x480_8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cork320x480_8.png; sourceTree = "<group>"; };
 		DEF30C9411927EC400F15595 /* beepscoreIcon57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = beepscoreIcon57.png; sourceTree = "<group>"; };
 		DEF4901911909C7E00329E85 /* DrawingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawingView.h; sourceTree = "<group>"; };
 		DEF4901A11909C7E00329E85 /* DrawingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawingView.m; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				DE0C34B7119336EE001A50BC /* cork320x480_8.png */,
 				DEF30C9411927EC400F15595 /* beepscoreIcon57.png */,
 				2899E5210DE3E06400AC0155 /* BorderlineViewController.xib */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
@@ -164,6 +167,7 @@
 				2899E5220DE3E06400AC0155 /* BorderlineViewController.xib in Resources */,
 				DEF81F741190CB0300D69D98 /* sun.jpg in Resources */,
 				DEF30C9511927EC400F15595 /* beepscoreIcon57.png in Resources */,
+				DE0C34B8119336EE001A50BC /* cork320x480_8.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
