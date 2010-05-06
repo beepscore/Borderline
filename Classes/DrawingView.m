@@ -34,15 +34,26 @@ CGMutablePathRef roundedRectPathRef(CGRect rect, CGFloat ovalWidth, CGFloat oval
 
     CGMutablePathRef tempPath = CGPathCreateMutable(); 
 
+    CGRect offsetRect = rect;
+    NSUInteger selfWidth = 320;
+    NSUInteger selfHeight = 320;
     CGFloat fw, fh;
+    
+    offsetRect.origin.x = (selfWidth - rect.size.width)/2;
+    offsetRect.origin.y = (selfHeight - rect.size.height)/2;
+
     // if either ovalWidth or ovalHeight is 0, don't round corners
     if ((0 == ovalWidth) || (0 == ovalHeight)) {
-        CGPathAddRect(tempPath, NULL, rect);
+        
+        CGPathAddRect(tempPath, NULL, offsetRect);
     } else {
         
+        CGAffineTransform transformOrigin = 
+        CGAffineTransformTranslate(CGAffineTransformIdentity, offsetRect.origin.x, offsetRect.origin.y);
+
         // Non-uniform scale coordinate system by the oval width and height.
         // In scaled coordinates, each rounded corner is a circular arc of radius = 0.5
-        CGAffineTransform transformScale = CGAffineTransformScale(CGAffineTransformIdentity, ovalWidth, ovalHeight);
+        CGAffineTransform transformScale = CGAffineTransformScale(transformOrigin, ovalWidth, ovalHeight);
 
         // Rectangle width in scaled x coordinate
         fw = CGRectGetWidth(rect) / ovalWidth;
@@ -76,7 +87,6 @@ CGMutablePathRef roundedRectPathRef(CGRect rect, CGFloat ovalWidth, CGFloat oval
 
         // Closing the path adds the last segment from arc4 end to arc1 start.
         CGPathCloseSubpath(tempPath);
-
     }
     return tempPath;
 }
@@ -88,7 +98,7 @@ void drawDropShadow(CGContextRef graphicsContext, CGRect rect, CGPathRef myPath)
     CGContextTranslateCTM(graphicsContext, rect.size.width/2, rect.size.height/2);
     CGContextScaleCTM(graphicsContext, 0.95, 0.95);
     CGContextTranslateCTM(graphicsContext, -rect.size.width/2, -rect.size.height/2);
-    CGContextTranslateCTM(graphicsContext, 0.01 * rect.size.width, 0.02 * rect.size.height);
+    CGContextTranslateCTM(graphicsContext, 0.01 * rect.size.width, 0.06 * rect.size.height);
 
     CGContextAddPath(graphicsContext, myPath);
 
@@ -138,16 +148,16 @@ void drawBorder(CGContextRef graphicsContext, CGPathRef myPath, CGFloat aBorderW
 
     // get graphics context from Cocoa for use by Quartz CoreGraphics.    
     CGContextRef graphicsContext = UIGraphicsGetCurrentContext();
-
-//    CGRect clipRect = CGRectMake(20.0, 20.0, 280.0, 280.0);
-    CGRect clipRect = CGRectMake(40.0, 40.0, 260.0, 260.0);
+    // CGRectMake(CGFloat x, CGFloat y, CGFloat width, CGFloat height)
+    CGRect clipRect = CGRectMake(20.0, 20.0, 280.0, 280.0);
+    // CGRect clipRect = CGRectMake(30.0, 30.0, 260.0, 260.0);
     CGFloat ovalWidth = [self cornerRadius];
     CGFloat ovalHeight = ovalWidth;    
     CGMutablePathRef myPath = roundedRectPathRef(clipRect, ovalWidth, ovalHeight);
 
     drawDropShadow(graphicsContext, [self bounds], myPath);
     
-    //drawClippedImage(graphicsContext, [self bounds], [self.myImage CGImage], myPath);
+    drawClippedImage(graphicsContext, [self bounds], [self.myImage CGImage], myPath);
     
     drawBorder(graphicsContext, myPath, self.borderWidth);
 
