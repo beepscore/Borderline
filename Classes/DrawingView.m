@@ -91,19 +91,26 @@ CGMutablePathRef roundedRectPathRef(CGRect rect, CGFloat ovalWidth, CGFloat oval
     return tempPath;
 }
 
-void drawDropShadow(CGContextRef graphicsContext, CGRect rect, CGPathRef myPath) {
+void drawDropShadow(CGContextRef graphicsContext, CGRect rect, CGPathRef myPath, CGFloat aBorderWidth) {
     
     CGContextSaveGState(graphicsContext);
-
+    CGFloat xScale = (rect.size.width + aBorderWidth)/rect.size.width;
+    CGFloat yScale = (rect.size.height + aBorderWidth)/rect.size.height;
+    
     CGContextTranslateCTM(graphicsContext, rect.size.width/2, rect.size.height/2);
-    CGContextScaleCTM(graphicsContext, 0.95, 0.95);
+    CGContextScaleCTM(graphicsContext, xScale, yScale);
     CGContextTranslateCTM(graphicsContext, -rect.size.width/2, -rect.size.height/2);
-    CGContextTranslateCTM(graphicsContext, 0.01 * rect.size.width, 0.06 * rect.size.height);
+    // offset shadow
+    CGContextTranslateCTM(graphicsContext, 0.01 * rect.size.width, 0.02 * rect.size.height);
 
     CGContextAddPath(graphicsContext, myPath);
-
-    CGContextSetRGBFillColor(graphicsContext, 0.0, 0.0, 0.0, 0.4);
     
+    
+    CGContextSetRGBFillColor(graphicsContext, 0.0, 0.0, 0.0, 0.4);
+    CGContextFillPath(graphicsContext);
+    
+    // increase DropShadow size based on border width  ref Gelphman p 138
+    CGContextReplacePathWithStrokedPath (graphicsContext);
     CGContextFillPath(graphicsContext);
     
     CGContextRestoreGState(graphicsContext);
@@ -150,12 +157,11 @@ void drawBorder(CGContextRef graphicsContext, CGPathRef myPath, CGFloat aBorderW
     CGContextRef graphicsContext = UIGraphicsGetCurrentContext();
     // CGRectMake(CGFloat x, CGFloat y, CGFloat width, CGFloat height)
     CGRect clipRect = CGRectMake(20.0, 20.0, 280.0, 280.0);
-    // CGRect clipRect = CGRectMake(30.0, 30.0, 260.0, 260.0);
     CGFloat ovalWidth = [self cornerRadius];
-    CGFloat ovalHeight = ovalWidth;    
+    CGFloat ovalHeight = ovalWidth;
     CGMutablePathRef myPath = roundedRectPathRef(clipRect, ovalWidth, ovalHeight);
-
-    drawDropShadow(graphicsContext, [self bounds], myPath);
+    
+    drawDropShadow(graphicsContext, [self bounds], myPath, self.borderWidth);
     
     drawClippedImage(graphicsContext, [self bounds], [self.myImage CGImage], myPath);
     
