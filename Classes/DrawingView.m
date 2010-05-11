@@ -35,12 +35,12 @@ CGMutablePathRef roundedRectPathRef(CGRect rect, CGFloat ovalWidth, CGFloat oval
     CGMutablePathRef tempPath = CGPathCreateMutable(); 
 
     CGRect offsetRect = rect;
-    NSUInteger selfWidth = 320;
-    NSUInteger selfHeight = 320;
+    NSUInteger kDrawingViewWidth = 320;
+    NSUInteger kDrawingViewHeight = 320;
     CGFloat fw, fh;
     
-    offsetRect.origin.x = (selfWidth - rect.size.width)/2;
-    offsetRect.origin.y = (selfHeight - rect.size.height)/2;
+    offsetRect.origin.x = (kDrawingViewWidth - rect.size.width)/2;
+    offsetRect.origin.y = (kDrawingViewHeight - rect.size.height)/2;
 
     // if either ovalWidth or ovalHeight is 0, don't round corners
     if ((0 == ovalWidth) || (0 == ovalHeight)) {
@@ -159,6 +159,9 @@ void drawBorder(CGContextRef graphicsContext, CGPathRef myPath, CGFloat aBorderW
     CGRect clipRect = CGRectMake(20.0, 20.0, 280.0, 280.0);
     CGFloat ovalWidth = [self cornerRadius];
     CGFloat ovalHeight = ovalWidth;
+    
+    // Create a new CGMutablePathRef each time.  Chris thinks this is low overhead.
+    // Alternatively could make myPath a class ivar and change it's value.    
     CGMutablePathRef myPath = roundedRectPathRef(clipRect, ovalWidth, ovalHeight);
     
     drawDropShadow(graphicsContext, [self bounds], myPath, self.borderWidth);

@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="6"/>
+			<integer value="18"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -58,7 +58,7 @@
 					<object class="IBUISlider" id="455035472">
 						<reference key="NSNextResponder" ref="774585933"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{18, 359}, {284, 23}}</string>
+						<string key="NSFrame">{{123, 377}, {179, 23}}</string>
 						<reference key="NSSuperview" ref="774585933"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -71,7 +71,7 @@
 					<object class="IBUISlider" id="496515029">
 						<reference key="NSNextResponder" ref="774585933"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{18, 418}, {284, 23}}</string>
+						<string key="NSFrame">{{123, 418}, {179, 23}}</string>
 						<reference key="NSSuperview" ref="774585933"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -83,7 +83,7 @@
 					<object class="IBUILabel" id="405040830">
 						<reference key="NSNextResponder" ref="774585933"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{20, 322}, {280, 29}}</string>
+						<string key="NSFrame">{{20, 373}, {97, 30}}</string>
 						<reference key="NSSuperview" ref="774585933"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>
@@ -111,7 +111,7 @@
 					<object class="IBUILabel" id="127585624">
 						<reference key="NSNextResponder" ref="774585933"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{20, 389}, {280, 29}}</string>
+						<string key="NSFrame">{{20, 414}, {97, 29}}</string>
 						<reference key="NSSuperview" ref="774585933"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -213,9 +213,9 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="725362690"/>
 							<reference ref="756959344"/>
+							<reference ref="455035472"/>
 							<reference ref="496515029"/>
 							<reference ref="127585624"/>
-							<reference ref="455035472"/>
 							<reference ref="405040830"/>
 						</object>
 						<reference key="parent" ref="0"/>
