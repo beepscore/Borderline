@@ -91,6 +91,7 @@ CGMutablePathRef roundedRectPathRef(CGRect rect, CGFloat ovalWidth, CGFloat oval
     return tempPath;
 }
 
+// This could be written as an Objective C method instead of a C function.  See HW 7
 void drawDropShadow(CGContextRef graphicsContext, CGRect rect, CGPathRef myPath, CGFloat aBorderWidth) {
     
     CGContextSaveGState(graphicsContext);
@@ -116,17 +117,14 @@ void drawDropShadow(CGContextRef graphicsContext, CGRect rect, CGPathRef myPath,
     CGContextRestoreGState(graphicsContext);
 }
 
-
+// This could be written as an Objective C method instead of a C function.  See HW 7
 void drawClippedImage(CGContextRef graphicsContext, CGRect rect, CGImageRef image, CGPathRef myPath) {
     
     CGContextSaveGState(graphicsContext);
     
     CGContextAddPath(graphicsContext, myPath);
     CGContextClip(graphicsContext);
-   
-    // Here we get a CGImageRef from a Cocoa UIImage.
-    // Alternatively, we could have gotten a CGImageRef from C.
-    // http://developer.apple.com/iphone/library/documentation/Cocoa/Conceptual/LoadingResources/ImageSoundResources/ImageSoundResources.html
+
     // Ref Gelphman Ch 8 p 187, Ch 9 p 206-207   
     CGContextDrawImage(graphicsContext, rect, image);
     
@@ -166,6 +164,9 @@ void drawBorder(CGContextRef graphicsContext, CGPathRef myPath, CGFloat aBorderW
     
     drawDropShadow(graphicsContext, [self bounds], myPath, self.borderWidth);
     
+    // [self.myImage CGImage] gets a CGImageRef from a Cocoa UIImage.
+    // Alternatively, we could have gotten a CGImageRef from C.
+    // http://developer.apple.com/iphone/library/documentation/Cocoa/Conceptual/LoadingResources/ImageSoundResources/ImageSoundResources.html    
     drawClippedImage(graphicsContext, [self bounds], [self.myImage CGImage], myPath);
     
     drawBorder(graphicsContext, myPath, self.borderWidth);
